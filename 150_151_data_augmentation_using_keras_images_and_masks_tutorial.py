@@ -28,7 +28,7 @@ datagen = ImageDataGenerator(
         fill_mode='reflect')
 
 
-x_img = io.imread(img_dir+'data/images/_Sandstone_Versa0000.png0_0.png')
+x_img = io.imread(img_dir+'/images/_Sandstone_Versa0000.png0_0.png')
 x_mask = io.imread(img_dir+'data/masks/_Sandstone_Versa0000.tif.png0_0.png')
 
 
