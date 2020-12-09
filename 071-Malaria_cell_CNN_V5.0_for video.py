@@ -1,14 +1,11 @@
 #!/usr/bin/env python
-__author__ = "Sreenivas Bhattiprolu"
-__license__ = "Feel free to copy, I appreciate if you acknowledge Python for Microscopists"
+__author__ = "Omid Charrakh"
+__license__ = "This is based on Python for Microscopists"
 
 # https://www.youtube.com/watch?v=R9PPxpzj5tI
 
 """
-@author: Sreenivas Bhattiprolu
-
 Dataset from: https://lhncbc.nlm.nih.gov/publication/pub9932
-
 """
 
 import numpy as np
@@ -31,7 +28,8 @@ os.environ['KERAS_BACKEND'] = 'tensorflow' # Added to set the backend as Tensorf
 #Then save as numpy array with name 'dataset'
 #Set the label to this as 0
 
-image_directory = 'cell_images2/'
+image_directory = '/Users/omid/Documents/GitHub/statistics/Image-Processing/My_Practice/Keras_PlayList/images/cell_image_71/'
+
 SIZE = 64
 dataset = []  #Many ways to handle data, you can use pandas. Here, we are using a list format.  
 label = []  #Place holders to define add labels. We will add 0 to all parasitized images and 1 to uninfected.
@@ -109,21 +107,19 @@ from keras.utils import to_categorical
 
 X_train, X_test, y_train, y_test = train_test_split(dataset, to_categorical(np.array(label)), test_size = 0.20, random_state = 0)
 
-# When training with Keras's Model.fit(), adding the tf.keras.callback.TensorBoard callback 
-# ensures that logs are created and stored. Additionally, enable histogram computation 
-#every epoch with histogram_freq=1 (this is off by default)
-#Place the logs in a timestamped subdirectory to allow easy selection of different training runs.
-
-#import datetime
-
-#log_dir="logs/fit/" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S") + "/"
-#tensorboard_callback = keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
-
-
-# ### Training the model
-# As the training data is now ready, I will use it to train the model.   
-
-#Fit the model
+# Remark: to_categorical converts our array into a binary class matrix 
+'''
+import datetime
+log_dir="logs/fit/" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S") + "/"
+tensorboard_callback = keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+'''
+###############################################################  
+#Training the model
+# As the training data is now ready, I will use it to train the model.
+# When training with Keras's Model.fit(), adding the tf.keras.callback.TensorBoard callback ensures that logs are created and stored. 
+# Additionally, enable histogram computation every epoch with histogram_freq=1 (this is off by default)
+# Place the logs in a timestamped subdirectory to allow easy selection of different training runs.
+  
 history = model.fit(np.array(X_train), 
                          y_train, 
                          batch_size = 64, 
@@ -135,11 +131,10 @@ history = model.fit(np.array(X_train),
                      )
 
 # ## Accuracy calculation
-# 
-# I'll now calculate the accuracy on the test data.
+# Calculate the accuracy on the test data.
 
 print("Test_Accuracy: {:.2f}%".format(model.evaluate(np.array(X_test), np.array(y_test))[1]*100))
-
+###############################################################  
 
 
 
@@ -167,7 +162,7 @@ l2 = ax2.legend(loc="best")
 
 
 #Save the model
-model.save('malaria_cnn.h5')
+model.save(image_directory+ 'malaria_cnn.h5')
 
 ################################################
 ### ANOTHER WAY TO DEFINE THE NETWORK using Sequential model
