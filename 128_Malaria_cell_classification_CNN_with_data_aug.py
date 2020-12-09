@@ -1,15 +1,21 @@
 #!/usr/bin/env python
-__author__ = "Sreenivas Bhattiprolu"
-__license__ = "Feel free to copy, I appreciate if you acknowledge Python for Microscopists"
+__author__ = "Omid Charrakh"
+__license__ = "This is based on Python for Microscopists"
+
 
 # https://youtu.be/We05FyZY-KY
 
 """
-@author: Sreenivas Bhattiprolu
+@author: Omid Charrakh
+
+Binary classification (Parasitized and Uninfected) via data augmentation
 
 Dataset from: https://lhncbc.nlm.nih.gov/publication/pub9932
 
 """
+######################################################################
+import tensorflow as tf
+import keras 
 
 
 from keras.preprocessing.image import ImageDataGenerator, img_to_array, load_img
@@ -25,7 +31,7 @@ datagen = ImageDataGenerator(
 
 ############################
 #Single image augmentation for demonstration purposes
-img = load_img('cell_images/Parasitized/C33P1thinF_IMG_20150619_114756a_cell_179.png')  
+img = load_img('/Users/omid/Documents/GitHub/statistics/Image-Processing/My_Practice/Keras_PlayList/images/cell_images/C33P1thinF_IMG_20150619_114756a_cell_179.png')  
 # uses Pillow in the backend, so need to convert to array
 
 x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
