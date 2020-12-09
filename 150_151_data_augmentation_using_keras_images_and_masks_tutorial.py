@@ -13,6 +13,8 @@ from keras.preprocessing.image import ImageDataGenerator
 from skimage import io
 import numpy as np
 
+img_dir= '/Users/omid/Documents/GitHub/statistics/Image-Processing/My_Practice/Keras_PlayList/images/'
+
 # Construct an instance of the ImageDataGenerator class
 # Pass the augmentation parameters through the constructor. 
 
@@ -26,8 +28,8 @@ datagen = ImageDataGenerator(
         fill_mode='reflect')
 
 
-x_img = io.imread('data/images/_Sandstone_Versa0000.png0_0.png')
-x_mask = io.imread('data/masks/_Sandstone_Versa0000.tif.png0_0.png')
+x_img = io.imread(img_dir+'data/images/_Sandstone_Versa0000.png0_0.png')
+x_mask = io.imread(img_dir+'data/masks/_Sandstone_Versa0000.tif.png0_0.png')
 
 
 x_img = np.expand_dims(x_img, axis=0)
