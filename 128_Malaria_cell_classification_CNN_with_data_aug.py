@@ -29,7 +29,7 @@ datagen = ImageDataGenerator(
         horizontal_flip=True,
         fill_mode='constant')  #Try other fill modes, e.g. nearest, reflect, wrap
 
-############################
+#############################################################
 #Single image augmentation for demonstration purposes
 img = load_img('/Users/omid/Documents/GitHub/statistics/Image-Processing/My_Practice/Keras_PlayList/images/cell_images/C33P1thinF_IMG_20150619_114756a_cell_179.png')  
 # uses Pillow in the backend, so need to convert to array
@@ -41,17 +41,17 @@ x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 15
 # and saves the results to the `preview/` directory
 i = 0
 for batch in datagen.flow(x, batch_size=1,  
-                          save_to_dir='augmented', save_prefix='aug', save_format='png'):
+                          save_to_dir='/Users/omid/Documents/GitHub/statistics/Image-Processing/My_Practice/Keras_PlayList/images/cell_images/single_augmented/',
+                          save_prefix='aug', 
+                          save_format='png'):
     i += 1
     if i > 20:
         break  # otherwise the generator would loop indefinitely
 
 #End Demo of single image
-##########################################################
-
 #############################################################
-    
-from keras.preprocessing.image import ImageDataGenerator
+
+
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
@@ -88,7 +88,7 @@ model.compile(loss='binary_crossentropy',
               metrics=['accuracy'])
 
 print(model.summary())    
-###############################################################  
+#############################################################
 batch_size = 16
 #Let's prepare our data. We will use .flow_from_directory() 
 #to generate batches of image data (and their labels) 
@@ -109,23 +109,26 @@ validation_datagen = ImageDataGenerator(rescale=1./255)
 # this is a generator that will read pictures found in
 # subfolers of 'data/train', and indefinitely generate
 # batches of augmented image data
+
+cell_dir= '/Users/omid/Documents/GitHub/statistics/Image-Processing/My_Practice/Keras_PlayList/images/cell_images/'
+
 train_generator = train_datagen.flow_from_directory(
-        'cell_images',  # this is the input directory
+        cell_dir+ 'train/',  # this is the input directory
         target_size=(150, 150),  # all images will be resized to 64x64
         batch_size=batch_size,
         class_mode='binary')  # since we use binary_crossentropy loss, we need binary labels
 
 # this is a similar generator, for validation data
 validation_generator = validation_datagen.flow_from_directory(
-        'cell_validation',
+        cell_dir+ 'test/',
         target_size=(150, 150),
         batch_size=batch_size,
         class_mode='binary')
 
 #Add checkpoints 
 from keras.callbacks import ModelCheckpoint
-#filepath='saved_models/models.h5'
-filepath="saved_models/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5" #File name includes epoch and validation accuracy.
+filepath=cell_dir+'saved_models/models.h5'
+#filepath=cell_dir+"saved_models/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5" #File name includes epoch and validation accuracy.
 checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 callbacks_list = [checkpoint]
 
@@ -138,9 +141,9 @@ model.fit_generator(
         validation_steps=800 // batch_size,
         callbacks=callbacks_list)
 model.save('malaria_augmented_model.h5')  # always save your weights after training or during training
-#####################################################
+#############################################################
 
-"""
+
 #To continue training, by modifying weights to existing model.
 #The saved model can be reinstated.
 from keras.models import load_model
