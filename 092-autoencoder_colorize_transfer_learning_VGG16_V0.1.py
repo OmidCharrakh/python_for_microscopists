@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-__author__ = "Sreenivas Bhattiprolu"
-__license__ = "Feel free to copy, I appreciate if you acknowledge Python for Microscopists"
+__author__ = "Omid Charrakh"
+__license__ = "This is based on Python for Microscopists"
 
 # https://youtu.be/bIaT2X5Hd5k
 
@@ -35,6 +35,7 @@ we will be using that latent space volume as a feature vector to be input to the
  we want the layers of VGG16 with its original weights without changing them, 
  so that we set the trainable parameter in each layer to false because we don’t want to train them again.
 """
+
 from keras.applications.vgg16 import VGG16
 vggmodel = VGG16()
 newmodel = Sequential() 
